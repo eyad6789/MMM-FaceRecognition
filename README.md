@@ -14,7 +14,6 @@ Assuming you're inside your MagicMirror directory, run the following commands:
 ```
 cd modules
 git clone https://github.com/eyad6789/MMM-FaceRecognition.git
-You will also need to set up the Python backend for face detection and recognition (see below).
 ```
 ## ⚙️ Requirements
 - MagicMirror²
@@ -75,60 +74,37 @@ modules: [
 
 🚀 How It Works
 The Python backend continuously processes webcam frames to detect and recognize faces.
-
 When a known face is detected:
+- A greeting message is generated using ChatGPT.
+- An ID card in PDF format is generated automatically.
+- (Optional) Amazon Polly speaks the greeting aloud.
+- The MagicMirror module displays the recognition message and shows alerts.
 
-A greeting message is generated using ChatGPT.
+## 🌐 Language Support
+- ✅ Arabic
+- ✅ English
 
-An ID card in PDF format is generated automatically.
+## 🔑 API Integration
+- ChatGPT: Requires an OpenAI API key for generating dynamic greeting messages.
+-Amazon Polly (Optional): For speech output; AWS credentials required.
 
-(Optional) Amazon Polly speaks the greeting aloud.
-
-The MagicMirror module displays the recognition message and shows alerts.
-
-🌐 Language Support
-✅ Arabic
-
-✅ English
-
-🔑 API Integration
-ChatGPT: Requires an OpenAI API key for generating dynamic greeting messages.
-
-Amazon Polly (Optional): For speech output; AWS credentials required.
-
-🗃️ Database
+## 🗃️ Database
 Face data is managed using an SQLite database (faces_optimized.db). You can store images and names which the system uses for recognition.
+## 🧪 Tested Devices
+Standard USB webcams Raspberry Pi Camera (with legacy mode enabled)
 
-🧪 Tested Devices
-Standard USB webcams
-
-Raspberry Pi Camera (with legacy mode enabled)
-
-📢 Notifications Sent
+## 📢 Notifications Sent
 Notification	Payload	Description
 FACE_RECOGNIZED	{ name }	Sent when a known face is recognized
 
-🗒️ Changelog
+## 🗒️ Changelog
 [1.0.0] - 2025-07-01
+### Initial release with:
+- Face recognition using Python and face_recognition
+- MagicMirror integration
+- ChatGPT greetings
+- ID card PDF generation
+- Optional voice support via Amazon Polly
 
-Initial release with:
 
-Face recognition using Python and face_recognition
-
-MagicMirror integration
-
-ChatGPT greetings
-
-ID card PDF generation
-
-Optional voice support via Amazon Polly
-
-🙏 Acknowledgements
-Special thanks to:
-
-OpenAI for ChatGPT API
-
-Amazon for Polly TTS
-
-The MagicMirror² community for the awesome platform
 
