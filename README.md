@@ -1,57 +1,134 @@
-# MMM-FaceRecognition for MagicMirror²
+# MMM-FaceRecognition
 
-**MMM-FaceRecognition** is a face recognition module designed for [MagicMirror²](https://magicmirror.builders/), developed by me and my friend. It enables MagicMirror to recognize faces, display personalized messages using OpenAI's ChatGPT, and supports both Arabic and English languages. Additionally, the project includes voice output powered by Amazon Polly.
+**Face Recognition Module for MagicMirror²**
 
-## 🧠 Features
+MMM-FaceRecognition is a smart face recognition module for [MagicMirror²](https://magicmirror.builders/) that allows your MagicMirror to recognize faces, greet users with personalized messages using ChatGPT, generate ID cards, and even provide voice feedback via Amazon Polly.
 
-- 🔒 Accurate face detection and recognition using Python and `face_recognition` library.
-- 💬 Personalized greetings generated via OpenAI ChatGPT.
-- 🗣️ Supports speech output using Amazon Polly.
-- 🌐 Arabic and English language support.
-- 🪪 Automatic PDF ID generation for recognized individuals.
-- 🖥️ Simple front-end integration with MagicMirror².
-- 🗃️ Uses SQLite database to manage stored faces.
-
-## 🛠️ Project Structure
+This module supports both Arabic and English, making it ideal for multi-lingual smart mirrors.
 
 
+## 📦 Installation
+
+Assuming you're inside your MagicMirror directory, run the following commands:
+
+```
+cd modules
+git clone https://github.com/eyad6789/MMM-FaceRecognition.git
+You will also need to set up the Python backend for face detection and recognition (see below).
+```
+## ⚙️ Requirements
+- MagicMirror²
+- Python 3.x
+
+### Required Python packages:
+- opencv-python
+- face_recognition
+- numpy
+- openai
+- fpdf
+- sqlite3
+- OpenAI API Key (optional for ChatGPT greetings) 
+- Amazon Polly credentials (optional for voice support)
+- A connected webcam
+
+## 🖥️ Raspberry Pi Notes
+The module has been tested on Raspberry Pi with a standard USB webcam.
+For Raspberry Pi Camera support, make sure to enable the legacy camera mode:
+```
+sudo raspi-config
+Then navigate to:
+```
+```
+3 Interface Options -> I1 Legacy Camera -> Enable
+```
+## 🗂️ Project Structure
 ```
 MMM-FaceRecognition/
 │
-├── MMM-FaceRecognition.js 
-├── MMM-faceRecogition.py 
-└── Other necessary assets 
+├── MMM-FaceRecognition.js   
+├── MMM-faceRecogition.py    
+├── faces_optimized.db        
+├── idCard.jpg                
+└── Other supporting assets
 ```
-## 🚀 How It Works
+## ⚒️ Configuration
+To use this module, add it to the modules array in your config/config.js file:
 
-1. The Python backend detects and recognizes faces through the webcam.
-2. When a face is recognized:
-   - ChatGPT generates a personalized greeting.
-   - A PDF identity card is generated.
-   - (Optional) Amazon Polly converts the greeting to speech.
-3. The MagicMirror module displays a message and shows alerts for recognized individuals.
+```
+modules: [
+  {
+    module: "MMM-FaceRecognition",
+    position: "top_left", // Optional: Position for debug information
+    config: {
+      recognizedMessage: "Hello, ", // Message prefix when a face is recognized
+      updateInterval: 10000          // Time between UI updates in ms
+    }
+  }
+];
+```
+### Configuration Options: 
+| Option              | Description                              | Default     |
+| ------------------- | ---------------------------------------- | ----------- |
+| `recognizedMessage` | Message prefix when a face is recognized | `"Hello, "` |
+| `updateInterval`    | Time in milliseconds between UI updates  | `10000`     |
 
-## 🧩 Requirements
 
-- MagicMirror² platform
-- Python 3.x
-- Required Python packages:
-  - `opencv-python`
-  - `face_recognition`
-  - `numpy`
-  - `openai`
-  - `fpdf`
-  - `sqlite3`
-- Amazon Polly credentials (optional)
-- OpenAI API key (optional for ChatGPT features)
+🚀 How It Works
+The Python backend continuously processes webcam frames to detect and recognize faces.
 
-## 🌍 Language Support
+When a known face is detected:
 
-- ✅ Arabic
-- ✅ English
+A greeting message is generated using ChatGPT.
 
-## ⚒️ Installation
+An ID card in PDF format is generated automatically.
 
-1. Install dependencies:
-   ```bash
-   pip install -r requirements.txt
+(Optional) Amazon Polly speaks the greeting aloud.
+
+The MagicMirror module displays the recognition message and shows alerts.
+
+🌐 Language Support
+✅ Arabic
+
+✅ English
+
+🔑 API Integration
+ChatGPT: Requires an OpenAI API key for generating dynamic greeting messages.
+
+Amazon Polly (Optional): For speech output; AWS credentials required.
+
+🗃️ Database
+Face data is managed using an SQLite database (faces_optimized.db). You can store images and names which the system uses for recognition.
+
+🧪 Tested Devices
+Standard USB webcams
+
+Raspberry Pi Camera (with legacy mode enabled)
+
+📢 Notifications Sent
+Notification	Payload	Description
+FACE_RECOGNIZED	{ name }	Sent when a known face is recognized
+
+🗒️ Changelog
+[1.0.0] - 2025-07-01
+
+Initial release with:
+
+Face recognition using Python and face_recognition
+
+MagicMirror integration
+
+ChatGPT greetings
+
+ID card PDF generation
+
+Optional voice support via Amazon Polly
+
+🙏 Acknowledgements
+Special thanks to:
+
+OpenAI for ChatGPT API
+
+Amazon for Polly TTS
+
+The MagicMirror² community for the awesome platform
+
